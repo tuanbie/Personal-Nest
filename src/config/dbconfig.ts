@@ -37,11 +37,11 @@ const config = {
     username: `${process.env.POSTGRES_USER}`,
     password: `${process.env.POSTGRES_PASS}`,
     database: `${process.env.POSTGRES_DB}`,
-    entities: ['dist/database/entity/*.entity{.ts,.js}'],
-    migrations: ['dist/migrations/*{.ts,.js}'],
+    entities: [`${__dirname}/../modules/*/*.entity{.ts,.js}`],
+    migrations: [`${__dirname}/../migrations/*{.ts,.js}`],// src/migrations/*{.ts,.js}
     autoLoadEntities: true,
     migrationsTableName: 'migrations',
-    synchronize: true,
+    synchronize: false,
 }
 
 export default registerAs('typeorm', () => config)

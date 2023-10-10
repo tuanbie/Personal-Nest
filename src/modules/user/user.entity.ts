@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Photo } from '../photo/index';
 
 @Entity()
 export class User {
@@ -21,7 +22,14 @@ export class User {
   password: string;
 
   @Column('varchar')
-
   gender: string;
+
+  @Column('varchar')
+  refresToken: string;
+
+  @Column('varchar')
+  status: string;
+
+  @OneToMany(type => Photo, photo => photo.user)
+  photos: Photo[];
 }
-// npm run build && npx typeorm -d dist/config/dbconfig.js "migration:generate" "src/migrations/migration"
