@@ -38,7 +38,7 @@ const config = {
     password: `${process.env.POSTGRES_PASS}`,
     database: `${process.env.POSTGRES_DB}`,
     entities: ['dist/database/entity/*.entity{.ts,.js}'],
-    migrations: ['dist/migrations/*.{.ts,.js}'],
+    migrations: ['dist/migrations/*{.ts,.js}'],
     autoLoadEntities: true,
     migrationsTableName: 'migrations',
     synchronize: true,
