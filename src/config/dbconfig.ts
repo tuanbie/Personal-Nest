@@ -37,7 +37,7 @@ const config = {
     username: `${process.env.POSTGRES_USER}`,
     password: `${process.env.POSTGRES_PASS}`,
     database: `${process.env.POSTGRES_DB}`,
-    entities: [`${__dirname}/../modules/*/*.entity{.ts,.js}`],
+    entities: [`${__dirname}/../modules/*/**/*.entity{.ts,.js}`],
     migrations: [`${__dirname}/../migrations/*{.ts,.js}`],// src/migrations/*{.ts,.js}
     autoLoadEntities: true,
     migrationsTableName: 'migrations',
