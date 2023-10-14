@@ -8,17 +8,19 @@ export class Permission {
   @Column('varchar', { nullable: false, length: 255, name: 'permission_name' })
   permissionName!: string;
 
-  @Column('timestamp', {
-    nullable: false,
-    default: () => 'CURRENT_TIMESTAMP',
-    name: 'updated_at',
-  })
-  modifiedAt!: Date;
+  
 
-  @Column('timestamp', {
-    nullable: false,
-    default: () => 'CURRENT_TIMESTAMP',
-    name: 'created_at',
-  })
-  createdAt!: Date;
+  // @Column('timestamp', {
+  //   nullable: false,
+  //   default: () => 'CURRENT_TIMESTAMP',
+  //   name: 'updated_at',
+  // })
+  // modifiedAt!: Date;
+
+  // @Column('timestamp', {
+  //   nullable: false,
+  //   default: () => 'CURRENT_TIMESTAMP',
+  //   name: 'created_at',
+  // })
+  // createdAt!: Date;
 }
