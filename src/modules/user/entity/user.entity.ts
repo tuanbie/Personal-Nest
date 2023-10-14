@@ -1,6 +1,6 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Photo } from '../../photo/index';
-import { Role } from './';
+import { Role, Permission } from './index';
 
 
 @Entity()
@@ -38,7 +38,11 @@ export class User {
   @OneToMany(type => Photo, photo => photo.user)
   photos: Photo[];
 
-  @ManyToMany(() => Role)
-  @JoinTable()
+  @ManyToOne(() => Role, role => role.user)
+  @JoinColumn()
   roles: Role[];
+
+  // @ManyToMany(() => Permission)
+  // @JoinTable()
+  // permissions: Permission[];
 }
