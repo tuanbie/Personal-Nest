@@ -7,11 +7,36 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { APP_PIPE, RouterModule } from '@nestjs/core';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { dirname, join } from 'path';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
     load: [Dbconfig]
+  }),
+  MailerModule.forRoot({
+    transport: {
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 587,
+      requireTLS: true,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_ACCOUNT,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+      logger: true,
+    },
+    template: {
+      dir: join(__dirname,'./shared/templates'),
+      adapter: new HandlebarsAdapter(),
+      options: {
+        strict: true,
+      },
+    },
   }),
   TypeOrmModule.forRootAsync({
     inject: [ConfigService],

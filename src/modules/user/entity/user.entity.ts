@@ -29,8 +29,11 @@ export class User {
   @Column('varchar')
   gender?: string;
 
-  @Column('varchar')
-  refresToken: string;
+  @Column('varchar', { nullable: true, name: 'refreshToken' })
+  refreshToken?: string;
+
+  @Column('varchar', { nullable: true, name: 'emailVerifyCode' })
+  emailVerifyCode?: string;
 
   @Column('varchar')
   status: string;
@@ -39,8 +42,8 @@ export class User {
   photos: Photo[];
 
   @ManyToOne(() => Role, role => role.user)
-  @JoinColumn()
-  roles: Role[];
+  @JoinColumn({ name: 'role_id' })
+  roles: Role;
 
   // @ManyToMany(() => Permission)
   // @JoinTable()

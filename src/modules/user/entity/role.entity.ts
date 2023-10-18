@@ -23,8 +23,7 @@ export class Role {
   roleName: string;
 
   @OneToMany(() => User, user => user.roles)
-  @JoinColumn()
-  user: User[];
+  user: User;
 
   // @Column('timestamp', {
   //   nullable: false,

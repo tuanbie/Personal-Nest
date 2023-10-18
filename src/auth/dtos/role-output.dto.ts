@@ -11,8 +11,4 @@ export class RoleOutput {
   @ApiProperty()
   roleName: string;
 
-  @Expose()
-  @ApiProperty()
-  @Type(() => PermissionOutput)
-  permissions: PermissionOutput[];
 }
