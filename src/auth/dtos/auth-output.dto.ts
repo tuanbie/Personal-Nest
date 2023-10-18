@@ -5,11 +5,11 @@ import { UserOutputDto } from '../../modules/user/dtos/user-output.dto';
 
 export class UserAccessTokenClaims {
   @Expose()
-  id: string;
+  id: number;
   @Expose()
   email: string;
   @Expose()
-  roles: RoleOutput[];
+  roles: RoleOutput;
 }
 
 export class UserAuthOutput {

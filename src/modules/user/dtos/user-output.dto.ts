@@ -5,7 +5,7 @@ import { RoleOutput } from 'src/auth/dtos';
 export class UserOutputDto {
   @Expose()
   @ApiProperty()
-  public _id: string;
+  public id: number;
 
   @Expose()
   @ApiProperty()
@@ -63,5 +63,5 @@ export class UserOutputDto {
   @Expose()
   @ApiProperty()
   @Type(() => RoleOutput)
-  roles: RoleOutput[];
+  roles: RoleOutput;
 }

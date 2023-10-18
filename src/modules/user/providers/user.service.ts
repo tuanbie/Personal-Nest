@@ -8,6 +8,9 @@ import * as bcrypt from 'bcrypt';
 import { Role } from '../entity';
 import { RoleEnum } from 'src/common/enum';
 import { RoleService } from './role.service';
+import { UserOutputDto } from '../dtos';
+import { BaseApiResponse } from 'src/shared/dtos';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UserService {
@@ -37,10 +40,12 @@ export class UserService {
       );
     const hash = await bcrypt.hash(createUserDto.password, 10);
     const role = await this.roleService.getRole(RoleEnum.MANAGER);
-    return this.userRepository.save({
-      ...createUserDto,
+    const userInfo = this.userRepository.create(createUserDto)
+    return await this.userRepository.save({
+      ...userInfo,
       password: hash,
-      roles: [role],
+      roles: role,
+      status: 'a'
     });
   }
 
@@ -52,15 +57,36 @@ export class UserService {
     return this.userRepository.findOneBy({ id });
   }
 
-  updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user: User = new User();
-    user.fullname = updateUserDto.name;
-    user.age = updateUserDto.age;
-    user.email = updateUserDto.email;
-    user.username = updateUserDto.username;
-    user.password = updateUserDto.password;
-    user.id = id;
-    return this.userRepository.save(user);
+  public async update(
+    id: number,
+    data: any,
+  ): Promise<BaseApiResponse<UserOutputDto>> {
+    const user = await this.userRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+    if (!user)
+      throw new HttpException(
+        {
+          error: true,
+          message: MESSAGES.NOT_FOUND_USER,
+          code: 404,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    this.userRepository.merge(user, data);
+    const updated = await this.userRepository.save(user);
+    // create user into realtime service
+    const result = plainToInstance(UserOutputDto, updated, {
+      excludeExtraneousValues: true,
+    });
+    return {
+      error: false,
+      data: result,
+      message: MESSAGES.UPDATE_SUCCEED,
+      code: 200,
+    };
   }
 
   removeUser(id: number): Promise<{ affected?: number }> {

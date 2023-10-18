@@ -7,21 +7,21 @@ export interface JwtSign {
 }
 
 export interface JwtPayload {
-  sub: string;
+  sub: number;
   email: string;
-  roles: RoleOutput[];
+  roles: RoleOutput;
 }
 
 type MakeNullable<T, K extends keyof T> = Omit<T, K>;
 
 export interface Payload {
-  id: string;
+  id: number;
   email: string;
-  roles: Role[] | RoleOutput[];
+  roles: Role | RoleOutput;
 }
 
 export interface RefreshTokenPayload {
-  sub: string;
+  sub: number;
 }
 
 export interface IBodySocketRequest {
